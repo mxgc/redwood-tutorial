@@ -10,7 +10,8 @@ export const standard = defineScenario({
         name: 'Jane Doe', // field that corresponds to the schema
         body: 'I like trees', // field that corresponds to the schema
         post: {
-          // this will populate
+          // this will create a new `Post` and connect `postId` to `Post.id`
+          // so there's no need to specify `postId`
           create: {
             title: 'Redwood Leaves',
             body: 'The quick brown fox jumped over the lazy dog.',
