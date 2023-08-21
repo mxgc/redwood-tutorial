@@ -6,6 +6,7 @@ export const standard = defineScenario({
         body: 'String',
         user: {
           create: {
+            id: 1,
             name: 'Fake User',
             email: 'fake1@fake.com',
             hashedPassword: 'fake',
@@ -19,9 +20,20 @@ export const standard = defineScenario({
         title: 'String',
         body: 'String',
         user: {
+          connect: {
+            email: 'fake1@fake.com',
+          },
+        },
+      },
+    },
+    three: {
+      data: {
+        title: 'String',
+        body: 'String',
+        user: {
           create: {
             name: 'Fake User',
-            email: 'fake2@fake.com',
+            email: 'fake3@fake.com',
             hashedPassword: 'fake',
             salt: 'fake',
           },

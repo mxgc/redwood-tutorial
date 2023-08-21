@@ -17,6 +17,13 @@ describe('comments', () => {
   scenario(
     'returns all comments for a single post from the db',
     async (scenario) => {
+      mockCurrentUser({
+        id: 1,
+        email: 'mod@mod.com',
+        roles: 'moderator',
+        name: 'Fake User',
+      })
+
       const got = await comments({
         postId: scenario.comment.jane.postId,
       }) // making a database call to the test database using Prisma

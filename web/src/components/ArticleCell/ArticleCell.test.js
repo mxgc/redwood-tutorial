@@ -1,4 +1,5 @@
 import { render, screen } from '@redwoodjs/testing'
+
 import { Loading, Empty, Failure, Success } from './ArticleCell'
 import { standard } from './ArticleCell.mock'
 
@@ -22,6 +23,13 @@ describe('ArticleCell', () => {
   })
 
   test('Success renders successfully', async () => {
+    mockCurrentUser({
+      id: 1,
+      name: 'Mod Mod',
+      email: 'mod@mod.com',
+      roles: 'moderator',
+    })
+
     const article = standard().article
     render(<Success article={article} />)
 

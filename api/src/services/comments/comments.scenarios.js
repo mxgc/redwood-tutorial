@@ -15,6 +15,14 @@ export const standard = defineScenario({
           create: {
             title: 'Redwood Leaves',
             body: 'The quick brown fox jumped over the lazy dog.',
+            user: {
+              create: {
+                email: 'fake1@fake.com',
+                hashedPassword: 'fake',
+                salt: 'fake',
+                name: 'Fake User',
+              },
+            },
           },
         }, // here, a `Comment` requires tha it be related to `Post`, using Prisma's nested create syntax
       },
@@ -27,6 +35,14 @@ export const standard = defineScenario({
           create: {
             title: 'Root Systems',
             body: 'The five boxing wizards jump quickly.',
+            user: {
+              create: {
+                email: 'fake2@fake.com',
+                hashedPassword: 'fake',
+                salt: 'fake',
+                name: 'Fake User',
+              },
+            },
           },
         },
       },
@@ -41,6 +57,14 @@ export const postOnly = defineScenario({
       data: {
         title: 'Bark',
         body: "A tree's bark is worse than its bite.",
+        user: {
+          create: {
+            email: 'fake@fake.com',
+            hashedPassword: 'fake',
+            salt: 'fake',
+            name: 'Fake User',
+          },
+        },
       },
     },
   },
