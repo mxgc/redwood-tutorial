@@ -1,6 +1,8 @@
+import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from 'src/lib/db'
 
-import { comments, createComment } from './comments'
+import { comments, createComment, deleteComment } from './comments'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
@@ -48,4 +50,43 @@ describe('comments', () => {
     expect(comment.postId).toEqual(senario.post.bark.id)
     expect(comment.createdAt).not.toEqual(null)
   })
+
+  scenario('allows a moderator to delete a comment', async (senario) => {
+    mockCurrentUser({ roles: ['moderator'] })
+
+    const comment = await deleteComment({
+      id: senario.comment.jane.id,
+    })
+
+    expect(comment.id).toEqual(senario.comment.jane.id)
+
+    const result = await comments({ postId: senario.comment.jane.postId })
+    expect(result.length).toEqual(0)
+  })
+
+  scenario(
+    'deos not allow a non-moderator to delete a comment',
+    async (senario) => {
+      mockCurrentUser({ roles: ['user'] })
+
+      expect(() => {
+        deleteComment({
+          id: senario.comment.jane.id,
+        })
+      }).toThrow(ForbiddenError)
+    }
+  )
+
+  scenario(
+    'deos not allow a logged-out user to delete a comment',
+    async (senario) => {
+      mockCurrentUser(null)
+
+      expect(() => {
+        deleteComment({
+          id: senario.comment.jane.id,
+        })
+      }).toThrow(AuthenticationError)
+    }
+  )
 })
