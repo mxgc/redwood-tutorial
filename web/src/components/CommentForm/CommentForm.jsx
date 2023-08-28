@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
   TextField,
   Label,
@@ -7,6 +9,9 @@ import {
   FormError,
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import { QUERY as CommentsQuery } from 'src/components/CommentsCell'
 
 // const CREATE = gql`
 //   mutation CreateCommentMutation($input: CreateCommentInput!) {
@@ -31,16 +36,24 @@ const CREATE = gql`
   }
 `
 
-const CommentForm = () => {
-  const [mut, { loading, error }] = useMutation(CREATE)
+const CommentForm = ({ postId }) => {
+  const [hasPosted, setHasPosted] = useState(false) // track whether user has posted a comment or not
+
+  const [mut, { loading, error }] = useMutation(CREATE, {
+    refetchQueries: [{ query: CommentsQuery }],
+    onCompleted: () => {
+      setHasPosted(true)
+      toast.success('Thank you for your comment!')
+    },
+  })
 
   // input is an obj { name: "xxx", body: "xxx"}
   const onSubmit = (input) => {
-    return mut({ variables: { input } })
+    return mut({ variables: { input: { ...input, postId } } })
   }
 
   return (
-    <div>
+    <div className={hasPosted ? 'hidden' : ''}>
       <h3 className="font-light text-lg text-gray-600">Leave a Comment</h3>
 
       <Form onSubmit={onSubmit} className="mt-4 w-full">
