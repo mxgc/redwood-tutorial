@@ -1,4 +1,6 @@
-import { render, screen } from '@redwoodjs/testing'
+import { render, screen, waitFor } from '@redwoodjs/testing'
+
+import { standard } from 'src/components/CommentsCell/CommentsCell.mock'
 
 import Article from './Article'
 
@@ -26,5 +28,29 @@ describe('Article', () => {
         'Neutra tacos hot chicken prism raw denim, put a bird on it enamel pin post-ironic vape cred DIY. Str...'
       )
     ).toBeInTheDocument()
+  })
+
+  it('renders comments when displaying a full blog post', async () => {
+    const comment = standard().comments[0]
+    render(<Article article={ARTICLE} summary={false} />)
+
+    // waitFor is needed because the `CommentsCell` in `Article` need to perform a gql query
+    // which is captured by the redwood sys and returned
+    await waitFor(() => {
+      expect(screen.getByText(comment.name)).toBeInTheDocument()
+      expect(screen.getByText(comment.body)).toBeInTheDocument()
+    })
+  })
+
+  it('deos not render comments when displaying a summary blog post', async () => {
+    const comment = standard().comments[0]
+    render(<Article article={ARTICLE} summary={true} />)
+
+    // queryByText does not throw
+    // waitFor is still needed here because otherwise we might get a false passing test since the page is still loading
+    await waitFor(() => {
+      expect(screen.queryByText(comment.name)).not.toBeInTheDocument()
+      expect(screen.queryByText(comment.body)).not.toBeInTheDocument()
+    })
   })
 })
