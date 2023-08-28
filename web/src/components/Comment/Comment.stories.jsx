@@ -14,4 +14,14 @@ import Comment from './Comment'
 
 export default { component: Comment }
 
-export const Primary = {}
+export const generated = () => {
+  return (
+    <Comment
+      comment={{
+        name: 'Rob Cameron',
+        body: 'This is a comment!',
+        createdAt: '2020-01-01T12:34:56Z',
+      }}
+    />
+  )
+}
