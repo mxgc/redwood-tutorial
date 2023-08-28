@@ -9,9 +9,12 @@ generator client {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  body      String
+  id    Int    @id @default(autoincrement())
+  title String
+  body  String
+
+  comments Comment[] // a convinence field added `db.post.findUnique( {where: {id: 1}} ).comments()
+
   createdAt DateTime @default(now())
 }
 
@@ -24,11 +27,25 @@ model Contact {
 }
 
 model User {
-  id                  Int @id @default(autoincrement())
+  id                  Int       @id @default(autoincrement())
   name                String?
-  email               String @unique
+  email               String    @unique
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+}
+
+model Comment {
+  id   Int    @id @default(autoincrement())
+  name String
+  body String
+
+  // note there's no db column named `post` in `Comment`, this is just a special syntax for Prisma to establish relations
+  // refer to it as a function by
+  // `db.comment.findUnique({where: { id: 1} }).post()`
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+
+  createdAt DateTime @default(now())
 }
