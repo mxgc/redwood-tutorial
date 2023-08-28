@@ -12,6 +12,7 @@ export const comment = ({ id }) => {
 }
 
 export const createComment = ({ input }) => {
+  //                          ^^ { input } matches `mut({ variables: { input } })`
   return db.comment.create({
     data: input,
   })

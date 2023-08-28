@@ -24,7 +24,7 @@ describe('comments', () => {
       },
     }
 
-    const comment = await createComment({ input: input })
+    const comment = await createComment({ input })
 
     expect(comment.name).toEqual(input.name)
     expect(comment.body).toEqual(input.body)
