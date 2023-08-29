@@ -1,8 +1,8 @@
 import { db } from 'src/lib/db'
 
-// ! comments here returns all comments not merely comments associated with an article
-export const comments = () => {
-  return db.comment.findMany()
+// only return comments related to a single post
+export const comments = ({ postId }) => {
+  return db.comment.findMany({ where: { postId } })
 }
 
 export const comment = ({ id }) => {

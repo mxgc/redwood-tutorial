@@ -40,7 +40,7 @@ const CommentForm = ({ postId }) => {
   const [hasPosted, setHasPosted] = useState(false) // track whether user has posted a comment or not
 
   const [mut, { loading, error }] = useMutation(CREATE, {
-    refetchQueries: [{ query: CommentsQuery }],
+    refetchQueries: [{ query: CommentsQuery, variables: { postId } }], // passing variables into the CommentsQuery
     onCompleted: () => {
       setHasPosted(true)
       toast.success('Thank you for your comment!')

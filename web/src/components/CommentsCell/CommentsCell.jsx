@@ -1,8 +1,10 @@
 import Comment from 'src/components/Comment'
 
 export const QUERY = gql`
-  query CommentsQuery {
-    comments {
+  query CommentsQuery($postId: Int!) {
+    #                 ^^ $postId is passed in as a prop called "postId" when using the componnent
+    #                     and is automatically made available by redwood
+    comments(postId: $postId) {
       id
       name
       body

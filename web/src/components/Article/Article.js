@@ -27,7 +27,7 @@ const Article = ({ article, summary = false }) => {
           </div>
 
           <div className="mt-12">
-            <CommentsCell />
+            <CommentsCell postId={article.id} />
           </div>
         </div>
       )}
