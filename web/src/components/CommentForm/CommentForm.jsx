@@ -28,7 +28,7 @@ const CommentForm = ({ postId }) => {
   const [hasPosted, setHasPosted] = useState(false)
 
   const [mut, { loading, error }] = useMutation(CREATE, {
-    refetchQueries: [{ query: CommentsQuery }], // after `mut` is invoked, refetch the comments
+    refetchQueries: [{ query: CommentsQuery, variables: { postId } }], // after `mut` is invoked, refetch the comments
     onCompleted: () => {
       setHasPosted(true)
       toast.success('Thank you for your comment!')

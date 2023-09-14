@@ -1,8 +1,8 @@
 import Comment from 'src/components/Comment'
 
 export const QUERY = gql`
-  query CommentsQuery {
-    comments {
+  query CommentsQuery($postId: Int!) {
+    comments(postId: $postId) {
       id
       name
       body
@@ -21,7 +21,9 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ comments }) => {
+export const Success = ({ comments, postId }) => {
+  console.log(`the article id is ${postId}`)
+
   return (
     <div className="space-y-8">
       {comments.map((comment) => {

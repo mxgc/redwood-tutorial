@@ -1,5 +1,6 @@
-import { comments, createComment } from './comments'
+import { db } from 'src/lib/db'
 
+import { comments, createComment } from './comments'
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.
 //           Please refer to the RedwoodJS Testing Docs:
@@ -7,12 +8,22 @@ import { comments, createComment } from './comments'
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
 describe('comments', () => {
-  scenario('returns all comments', async (scenario) => {
-    // returns result from test db that's reset between each runs
-    const result = await comments()
+  scenario(
+    'returns all comments for a single post from the db',
+    async (scenario) => {
+      // returns result from test db that's reset between each runs
+      // scenario contains all the fields returned from db (in addition to the ones specified in scenario file)
+      // so `postId` is available even if not direclty specifed
+      const result = await comments({ postId: scenario.comment.jane.postId })
+      const post = await db.post.findUnique({
+        where: { id: scenario.comment.jane.postId },
+        include: { comments: true }, // include / select
+      })
 
-    expect(result.length).toEqual(Object.keys(scenario.comment).length)
-  })
+      // expect(result.length).toEqual(Object.keys(scenario.comment).length)
+      expect(result.length).toEqual(post.comments.length)
+    }
+  )
 
   scenario('postOnly', 'creates a new comment', async (scenario) => {
     const comment = await createComment({
