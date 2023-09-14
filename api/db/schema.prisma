@@ -14,6 +14,8 @@ model Post {
   body      String
   comments  Comment[] // one Post to Comment[] (many Comments)
   createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id]) // userId referens field `id` on model `User`
+  userId    Int
 }
 
 model Contact {
@@ -34,6 +36,8 @@ model User {
   resetTokenExpiresAt DateTime?
 
   roles String @default("mod") // "admin", "mod"
+
+  posts Post[]
 }
 
 model Comment {

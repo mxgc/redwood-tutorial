@@ -12,6 +12,13 @@ export const standard = defineScenario({
           create: {
             title: 'Redwood Leaves',
             body: 'The quick brown fox jumped over the lazy dog',
+            user: {
+              create: {
+                email: 'email1@email.com',
+                hashedPassword: 'String',
+                salt: 'String',
+              },
+            },
           },
         },
       },
@@ -24,6 +31,13 @@ export const standard = defineScenario({
           create: {
             title: 'Root Systems',
             body: 'The five boxing wizards jump quickly.',
+            user: {
+              create: {
+                email: 'email2@email.com',
+                hashedPassword: 'String',
+                salt: 'String',
+              },
+            },
           },
         },
       },
@@ -38,6 +52,13 @@ export const postOnly = defineScenario({
       data: {
         title: 'Bark',
         body: "A tree's bark is worse than its bite",
+        user: {
+          create: {
+            email: 'bark@email.com',
+            hashedPassword: 'String',
+            salt: 'String',
+          },
+        },
       },
     },
 
@@ -45,6 +66,13 @@ export const postOnly = defineScenario({
       data: {
         title: 'Bare',
         body: "A tree's top",
+        user: {
+          create: {
+            email: 'bare@email.com',
+            hashedPassword: 'String',
+            salt: 'String',
+          },
+        },
       },
     },
   },
