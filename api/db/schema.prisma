@@ -32,6 +32,8 @@ model User {
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+
+  roles String @default("mod") // "admin", "mod"
 }
 
 model Comment {

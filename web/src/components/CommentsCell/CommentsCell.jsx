@@ -6,6 +6,7 @@ export const QUERY = gql`
       id
       name
       body
+      postId
       createdAt
     }
   }
@@ -21,9 +22,7 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ comments, postId }) => {
-  console.log(`the article id is ${postId}`)
-
+export const Success = ({ comments }) => {
   return (
     <div className="space-y-8">
       {comments.map((comment) => {
