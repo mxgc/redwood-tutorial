@@ -2,27 +2,31 @@ import { posts, post, createPost, updatePost, deletePost } from './posts'
 
 describe('posts', () => {
   scenario('returns all posts', async (scenario) => {
+    mockCurrentUser({ id: scenario.post.one.userId })
+
     const result = await posts()
 
-    expect(result.length).toEqual(Object.keys(scenario.post).length)
+    expect(result.length).toEqual(1)
   })
 
   scenario('returns a single post', async (scenario) => {
+    mockCurrentUser({ id: scenario.post.one.userId })
+
     const result = await post({ id: scenario.post.one.id })
 
     expect(result).toEqual(scenario.post.one)
   })
 
   scenario('userOnly', 'creates a post', async (scenario) => {
-    // console.log(scenario.user.one.id)
+    mockCurrentUser({ id: scenario.user.one.id })
 
     const result = await createPost({
       input: {
         title: 'String',
         body: 'String',
-        user: {
-          connect: { id: scenario.user.one.id },
-        },
+        // user: {
+        //   connect: { id: scenario.user.one.id },
+        // },
       },
     })
 
@@ -31,6 +35,8 @@ describe('posts', () => {
   })
 
   scenario('updates a post', async (scenario) => {
+    mockCurrentUser({ id: scenario.post.one.userId })
+
     const original = await post({ id: scenario.post.one.id })
     const result = await updatePost({
       id: original.id,
@@ -41,6 +47,8 @@ describe('posts', () => {
   })
 
   scenario('deletes a post', async (scenario) => {
+    mockCurrentUser({ id: scenario.post.one.userId })
+
     const original = await deletePost({ id: scenario.post.one.id })
     const result = await post({ id: original.id })
 

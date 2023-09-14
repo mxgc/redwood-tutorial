@@ -1,20 +1,19 @@
 import { db } from 'src/lib/db'
 
 export const posts = () => {
-  return db.post.findMany()
+  return db.post.findMany({ where: { userId: context.currentUser.id } })
 }
 
 export const post = ({ id }) => {
   // changed to `findFirst` from `findUnique` (requires unique indexes)
   return db.post.findFirst({
-    where: { id },
+    where: { id, userId: context.currentUser.id },
   })
 }
 // magic variable `context` contains the `currentUser` that's logged in (same as available on the web side from useAuth() hook)
 export const createPost = ({ input }) => {
   return db.post.create({
-    // data: { ...input, userId: context.currentUser.id },
-    data: input,
+    data: { ...input, userId: context.currentUser.id },
   })
 }
 
