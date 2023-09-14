@@ -14,7 +14,7 @@ describe('posts', () => {
   })
 
   scenario('userOnly', 'creates a post', async (scenario) => {
-    console.log(scenario.user.one.id)
+    // console.log(scenario.user.one.id)
 
     const result = await createPost({
       input: {

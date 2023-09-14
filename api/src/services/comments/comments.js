@@ -41,7 +41,7 @@ export const deleteComment = ({ id }) => {
 //   }
 // }
 export const Comment = {
-  Post: (_obj, { root }) => {
-    return db.comment.findUnique({ where: { id: root?.id } }).Post()
+  post: (_obj, { root }) => {
+    return db.comment.findUnique({ where: { id: root?.id } }).post()
   },
 }
