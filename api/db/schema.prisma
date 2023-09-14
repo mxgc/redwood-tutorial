@@ -38,7 +38,7 @@ model Comment {
   id        Int      @id @default(autoincrement())
   name      String
   body      String
-  Post      Post     @relation(fields: [postId], references: [id]) // `postId` references the `id` field of `Post`; note: there's no actual `Post` field here
+  post      Post     @relation(fields: [postId], references: [id]) // `postId` references the `id` field of `Post`; note: there's no actual `Post` field here
   postId    Int
   createdAt DateTime @default(now())
 }
